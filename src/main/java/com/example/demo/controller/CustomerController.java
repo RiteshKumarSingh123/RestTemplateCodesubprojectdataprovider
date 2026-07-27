@@ -2,7 +2,12 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import com.example.demo.entity.ContactDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +26,13 @@ public class CustomerController {
 	
 	@Autowired
 	private CustomerService service;
+
+	@Value("${build.version.java-version}")
+	private String javaVersion;
+
+	@Autowired
+	private ContactDetails contactDetails;
+
 	
 	@PostMapping("/saveCustomer")
 	public CustomerRanger saveCustomerData(@RequestBody CustomerRanger cutomer) {
@@ -45,6 +57,17 @@ public class CustomerController {
 	@PutMapping("/updateCustomerRange")
 	public CustomerRanger updateCustomerRange(@RequestBody CustomerRanger customerRanger) {
 		return service.updateCustomerRange(customerRanger);
+	}
+
+	@GetMapping("/javaVersion")
+	public ResponseEntity<String> getVersion(){
+		return ResponseEntity.status(HttpStatus.OK).body(javaVersion);
+	}
+
+	@GetMapping("/getContactDetails")
+	public ResponseEntity<ContactDetails> getContactDetails(){
+		ContactDetails details = new ContactDetails();
+		return ResponseEntity.status(HttpStatus.OK).body(contactDetails);
 	}
 
 }

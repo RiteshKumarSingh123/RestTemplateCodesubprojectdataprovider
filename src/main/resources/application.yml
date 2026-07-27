@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: MyDemoOneRest-1
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  profiles:
+    active: qa
+
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+build:
+  version:
+    java-version: "1.2"
+
+accounts:
+  message: "welcome to the king sector here only one lion is there that is buddha"
+
+  contact-details:
+    name: "buddha the unknown developer"
+    developer: "luddha the self thinking developer"
+
+  on-call-support:
+    - "989898989797"
+    - "919919191919"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
